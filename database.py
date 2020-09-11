@@ -10,7 +10,7 @@ from urllib.parse import quote_plus
 def sqlalchemy_connect():
     conn_str = 'postgresql+psycopg2://{user}:{password}@localhost:5432/{database}'.\
         format(user="postgres",
-               password="ColtMccoy12",
+               password="some_password",
                database='postgres')
     engine = sqlalchemy.create_engine(conn_str
                                       ,use_batch_mode=True
