@@ -1,0 +1,6 @@
+import models as m
+import database as db
+
+if __name__ == '__main__':
+    engine, session = db.sqlalchemy_session()
+    m.create_models(engine)
