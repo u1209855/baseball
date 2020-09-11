@@ -3,11 +3,12 @@ import os
 import models as m
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
+import psycopg2
 from urllib.parse import quote_plus
 
 
 def sqlalchemy_connect():
-    conn_str = 'postgresql://{user}:{password}@localhost:5432/{database}'.\
+    conn_str = 'postgresql+psycopg2://{user}:{password}@localhost:5432/{database}'.\
         format(user="postgres",
                password="ColtMccoy12",
                database='postgres')
