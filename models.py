@@ -1,5 +1,5 @@
-from sqlalchemy import Column, INTEGER, NVARCHAR, TIMESTAMP, ForeignKey, DECIMAL, UniqueConstraint, JSON,\
-     FLOAT, VARCHAR, DATE
+from sqlalchemy import Column, INTEGER, NVARCHAR, TIMESTAMP, ForeignKey, DECIMAL, UniqueConstraint, JSON, \
+    FLOAT, VARCHAR, DATE
 from database import Base
 
 
@@ -33,9 +33,9 @@ class AwardsShareManagers(Base):
     __tablename__ = "awardssharemanagers"
     __table_args__ = {"schema": "public"}
     awardID = Column(VARCHAR(20))
-    yearID = Column(VARCHAR(4), primary_key = True)
-    lgID = Column(VARCHAR(2), primary_key = True)
-    playerID = Column(VARCHAR(10), primary_key = True)
+    yearID = Column(VARCHAR(4), primary_key=True)
+    lgID = Column(VARCHAR(2), primary_key=True)
+    playerID = Column(VARCHAR(10), primary_key=True)
     pointsWon = Column(INTEGER)
     pointsMax = Column(INTEGER)
     votesFirst = Column(INTEGER)
@@ -44,8 +44,8 @@ class AwardsShareManagers(Base):
 class AllStarFull(Base):
     __tablename__ = "allstarfull"
     __table_args__ = {"schema": "public"}
-    playerID = Column(VARCHAR(10), primary_key = True)
-    yearID = Column(VARCHAR(4), primary_key = True)
+    playerID = Column(VARCHAR(10), primary_key=True)
+    yearID = Column(VARCHAR(4), primary_key=True)
     gameNum = Column(INTEGER)
     teamID = Column(VARCHAR(3))
     lgID = Column(VARCHAR(3))
@@ -56,9 +56,9 @@ class AllStarFull(Base):
 class AwardsManagers(Base):
     __tablename__ = "awardsmanagers"
     __table_args__ = {"schema": "public"}
-    playerID = Column(VARCHAR(10), primary_key = True)
-    awardID = Column(VARCHAR(30), primary_key = True)
-    yearID = Column(VARCHAR(4), primary_key = True)
+    playerID = Column(VARCHAR(10), primary_key=True)
+    awardID = Column(VARCHAR(30), primary_key=True)
+    yearID = Column(VARCHAR(4), primary_key=True)
     lgID = Column(VARCHAR(2))
     tie = Column(VARCHAR(1))
     notes = Column(VARCHAR(3))
@@ -117,18 +117,18 @@ class Batting(Base):
 class Salaries(Base):
     __tablename__ = "salaries"
     __table_args__ = {"schema": "public"}
-    yearID = Column(VARCHAR(4), primary_key = True)
+    yearID = Column(VARCHAR(4), primary_key=True)
     teamID = Column(VARCHAR(3))
     lgID = Column(VARCHAR(2))
-    playerID = Column(VARCHAR(10), primary_key = True)
+    playerID = Column(VARCHAR(10), primary_key=True)
     salary = Column(INTEGER)
 
 
 class FieldingOF(Base):
     __tablename__ = "fieldingOF"
     __table_args__ = {"schema": "public"}
-    playerID = Column(VARCHAR(10), primary_key = True)
-    yearID = Column(VARCHAR(4), primary_key = True)
+    playerID = Column(VARCHAR(10), primary_key=True)
+    yearID = Column(VARCHAR(4), primary_key=True)
     stint = Column(INTEGER)
     glf = Column(INTEGER)
     gcf = Column(INTEGER)
@@ -145,15 +145,15 @@ class HallofFame(Base):
     needed = Column(INTEGER)
     votes = Column(INTEGER)
     inducted = Column(VARCHAR(1))
-    category  = Column(VARCHAR(10))
+    category = Column(VARCHAR(10))
     needed_note = Column(VARCHAR(10))
 
 
 class Managers(Base):
     __tablename__ = "managers"
     __table_args__ = {"schema": "public"}
-    playerID = Column(VARCHAR(10), primary_key = True)
-    yearID = Column(VARCHAR(4), primary_key = True)
+    playerID = Column(VARCHAR(10), primary_key=True)
+    yearID = Column(VARCHAR(4), primary_key=True)
     votedBy = Column(VARCHAR(20))
     ballots = Column(INTEGER)
     needed = Column(INTEGER)

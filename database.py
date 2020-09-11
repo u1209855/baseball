@@ -2,23 +2,22 @@ import sqlalchemy
 import os
 import models as m
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 Base = declarative_base()
-import psycopg2
-from urllib.parse import quote_plus
 
 
 def sqlalchemy_connect():
     conn_str = 'postgresql+psycopg2://{user}:{password}@localhost:5432/{database}'.\
         format(user="postgres",
-               password="some_password",
-               database='postgres')
+               password="ColtMccoy12",
+               database='baseball')
     engine = sqlalchemy.create_engine(conn_str
                                       ,use_batch_mode=True
                                       ,server_side_cursors=True)
     Session = sqlalchemy.orm.sessionmaker(autoflush=False)
     Session.configure(bind=engine)
     session = Session()
-    return engine, session
+    return engine
 
 
 def sqlalchemy_session():
