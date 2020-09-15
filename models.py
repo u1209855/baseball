@@ -36,15 +36,17 @@ class TeamFranchises(Base):
     __tablename__ = "team_franchises"
     __table_args__ = {"schema": "public"}
     franchID = Column(VARCHAR(3), primary_key=True)
-    franchName = Column(VARCHAR(30))
-    active = Column(VARCHAR(1))
+    franchName = Column(VARCHAR(60))
+    active = Column(VARCHAR(2))
     NAassoc = Column(VARCHAR(3))
 
 
 class Teams(Base):
     __tablename__ = "teams"
     __table_args__ = {"schema": "public"}
+    teamID_auto = Column(INTEGER, autoincrement=True, primary_key=True)
     yearID = Column(VARCHAR(4))
+    lgId = Column(VARCHAR(2))
     teamID = Column(VARCHAR(3), primary_key=True)
     franchID = Column(VARCHAR(3), ForeignKey(TeamFranchises.franchID))
     divID = Column(VARCHAR(1))
@@ -72,7 +74,7 @@ class Teams(Base):
     SF = Column(INTEGER)
     RA = Column(INTEGER)
     ER = Column(INTEGER)
-    ERA = Column(INTEGER)
+    ERA = Column(FLOAT)
     CG = Column(INTEGER)
     SHO = Column(INTEGER)
     SV = Column(INTEGER)
@@ -80,18 +82,19 @@ class Teams(Base):
     HA = Column(INTEGER)
     HRA = Column(INTEGER)
     BBA = Column(INTEGER)
-    BPF = Column(INTEGER)
     SOA = Column(INTEGER)
     E = Column(INTEGER)
     DP = Column(INTEGER)
-    FP = Column(INTEGER)
-    name = Column(VARCHAR(30))
-    park = Column(VARCHAR(45))
+    FP = Column(FLOAT)
+    name = Column(VARCHAR(60))
+    park = Column(VARCHAR(128))
     attendance = Column(INTEGER)
+    BPF = Column(INTEGER)
     PPF = Column(INTEGER)
     teamIDBR = Column(VARCHAR(3))
     teamIDAhlman = Column(VARCHAR(3))
     teamIDretro = Column(VARCHAR(3))
+    UniqueConstraint(teamID)
 
 
 class Managers(Base):
