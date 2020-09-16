@@ -12,6 +12,12 @@ def conn():
     return con
 
 
+def curs():
+    cont = conn()
+    c = cont.cursor()
+    return cont, c
+
+
 def sqlalchemy_connect():
     conn_str = 'postgresql+psycopg2://{user}:{password}@localhost:5432/{database}'.\
         format(user="postgres",
@@ -47,24 +53,15 @@ def sqlalchemy_execute_raw(engine, sql):
         return result_generator
 
 
-def sqlalchemy_execute_sql_file(engine, sql_file):
-    path = os.path.join(os.path.abspath('./sql/'), sql_file)
-    with open(path, 'r') as readfile:
-        return sqlalchemy_execute_raw(engine, readfile.read())
+def execute_sql_no_return(sql_location, format_dict=None):
+    cons, c = curs()
+    with open(sql_location, 'r') as sql_file:
+            sql = sql_file.read()
 
+    if format_dict:
+        sql = sql.format(**format_dict)
+        # print(sql)
 
-def sqlalchemy_execute_raw_noret(session, sql):
-    session.commit()
-    session.execute(sql)
-    session.commit()
+    c.execute(sql)
+    cons.commit()
 
-
-def sqlalchemy_engine_raw_noret(engine, sql):
-    with engine.connect() as conn:
-        conn.execute(sql)
-
-
-def sqlalchemy_execute_sql_file_noret(session, sql_file):
-    path = os.path.join(os.path.abspath('./sql'), sql_file)
-    with open(path, 'r') as readfile:
-        sqlalchemy_execute_raw_noret(session, readfile.read())

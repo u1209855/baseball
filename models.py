@@ -32,6 +32,37 @@ class Master(Base):
     bbrefID = Column(VARCHAR(10))
 
 
+class Master_Wh(Base):
+    __tablename__ = "master"
+    __table_args__ = {"schema": "wh"}
+    playerID_auto = Column(INTEGER, autoincrement=True, primary_key=True)
+    playerID = Column(VARCHAR(10), primary_key=True)
+    birthYear = Column(VARCHAR(4))
+    birthMonth = Column(INTEGER)
+    birthDay = Column(INTEGER)
+    birthCountry = Column(VARCHAR(15))
+    birthState = Column(VARCHAR(30))
+    birthCity = Column(VARCHAR(30))
+    deathYear = Column(VARCHAR(4))
+    deathMonth = Column(INTEGER)
+    deathDay = Column(INTEGER)
+    deathCountry = Column(VARCHAR(15))
+    deathState = Column(VARCHAR(30))
+    deathCity = Column(VARCHAR(30))
+    nameFirst = Column(VARCHAR(20))
+    nameLast = Column(VARCHAR(20))
+    nameGiven = Column(VARCHAR(60))
+    weight = Column(INTEGER)
+    height = Column(INTEGER)
+    bats = Column(VARCHAR(1))
+    throws = Column(VARCHAR(1))
+    debut = Column(DATE)
+    finalGame = Column(DATE)
+    retroID = Column(VARCHAR(10))
+    bbrefID = Column(VARCHAR(10))
+    UniqueConstraint(playerID)
+
+
 class TeamFranchises(Base):
     __tablename__ = "team_franchises"
     __table_args__ = {"schema": "public"}
@@ -39,6 +70,17 @@ class TeamFranchises(Base):
     franchName = Column(VARCHAR(60))
     active = Column(VARCHAR(2))
     NAassoc = Column(VARCHAR(3))
+
+
+class TeamFranchises_Wh(Base):
+    __tablename__ = "team_franchises"
+    __table_args__ = {"schema": "wh"}
+    franchID_auto = Column(INTEGER, autoincrement=True, primary_key=True)
+    franchID = Column(VARCHAR(3), primary_key=True)
+    franchName = Column(VARCHAR(60))
+    active = Column(VARCHAR(2))
+    NAassoc = Column(VARCHAR(3))
+    UniqueConstraint(franchID)
 
 
 class Teams(Base):
