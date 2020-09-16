@@ -44,7 +44,6 @@ class TeamFranchises(Base):
 class Teams(Base):
     __tablename__ = "teams"
     __table_args__ = {"schema": "public"}
-    teamID_auto = Column(INTEGER, autoincrement=True, primary_key=True)
     yearID = Column(VARCHAR(4))
     lgId = Column(VARCHAR(2))
     teamID = Column(VARCHAR(3), primary_key=True)
@@ -94,7 +93,6 @@ class Teams(Base):
     teamIDBR = Column(VARCHAR(3))
     teamIDAhlman = Column(VARCHAR(3))
     teamIDretro = Column(VARCHAR(3))
-    UniqueConstraint(teamID)
 
 
 class Managers(Base):
@@ -103,7 +101,7 @@ class Managers(Base):
     manager_ID = Column(INTEGER, primary_key=True, autoincrement=True)
     playerID = Column(VARCHAR(10))
     yearID = Column(VARCHAR(4))
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamID = Column(VARCHAR(3))
     lgID = Column(VARCHAR(2))
     inseason = Column(INTEGER)
     G = Column(INTEGER)

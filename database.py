@@ -1,9 +1,15 @@
 import sqlalchemy
 import os
+import psycopg2
 import models as m
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 Base = declarative_base()
+
+
+def conn():
+    con = psycopg2.connect("host=localhost dbname=baseball user=postgres password = some_password")
+    return con
 
 
 def sqlalchemy_connect():
