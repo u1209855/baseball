@@ -14,7 +14,16 @@ def join_path(fn):
 def insert_data():
     conn = db.conn()
     cur = conn.cursor()
-    csv_tables = {'Master.csv': 'master', 'TeamsFranchises.csv': 'team_franchises'}
+    csv_tables = {'Master.csv': 'master', 'TeamsFranchises.csv': 'team_franchises',
+                  'teams.csv': 'teams', 'managers.csv': 'managers',
+                  'teamshalf.csv': 'teams_half', 'awardssharemanagers.csv': 'awardssharemanagers',
+                  'awardsmanagers.csv': 'awardsmanagers', 'awardsplayers.csv': 'awardsplayers',
+                  'awardsshareplayers.csv': 'awardsshareplayers', 'batting.csv': 'batting',
+                  'salaries.csv': 'salaries', 'fieldingOF.csv': "fieldingOF",
+                  'halloffame.csv': 'halloffame', 'managershalf.csv': 'managers_half',
+                  'seriespost.csv': 'series_post', 'battingpost.csv': 'batting_post',
+                  'fielding.csv': 'fielding', 'pitching.csv': 'pitching',
+                  'pitchingpost.csv': 'pitching_post'}
     for i, k in csv_tables.items():
 
         path = join_path("{i}".format(i=i))
