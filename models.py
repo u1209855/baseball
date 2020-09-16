@@ -44,10 +44,11 @@ class TeamFranchises(Base):
 class Teams(Base):
     __tablename__ = "teams"
     __table_args__ = {"schema": "public"}
+    teamID_auto = Column(INTEGER, autoincrement=True, primary_key=True)
     yearID = Column(VARCHAR(4))
     lgId = Column(VARCHAR(2))
-    teamID = Column(VARCHAR(3), primary_key=True)
-    franchID = Column(VARCHAR(3), ForeignKey(TeamFranchises.franchID))
+    teamID = Column(VARCHAR(3))
+    franchID = Column(VARCHAR(3))  # ForeignKey(TeamFranchises.franchID))
     divID = Column(VARCHAR(1))
     Rank = Column(INTEGER)
     G = Column(INTEGER)
@@ -93,6 +94,7 @@ class Teams(Base):
     teamIDBR = Column(VARCHAR(3))
     teamIDAhlman = Column(VARCHAR(3))
     teamIDretro = Column(VARCHAR(3))
+    UniqueConstraint(teamID, yearID)
 
 
 class Managers(Base):
@@ -118,7 +120,7 @@ class TeamsHalf(Base):
     teamsHalfID = Column(INTEGER, primary_key=True, autoincrement=True)
     yearID = Column(VARCHAR(4))
     lgID = Column(VARCHAR(2))
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     half = Column(INTEGER)
     divID = Column(VARCHAR(2))
     divWin = Column(VARCHAR(1))
@@ -132,7 +134,7 @@ class AwardsShareManagers(Base):
     __tablename__ = "awardssharemanagers"
     __table_args__ = {"schema": "public"}
     awardsShareManagersID = Column(INTEGER, primary_key=True, autoincrement=True)
-    manager_ID = Column(INTEGER, ForeignKey(Managers.manager_ID))
+    manager_ID = Column(INTEGER)  # ForeignKey(Managers.manager_ID))
     playerID = Column(VARCHAR(10))
     yearID = Column(VARCHAR(4))
     lgID = Column(VARCHAR(2))
@@ -147,10 +149,10 @@ class AllStarFull(Base):
     __tablename__ = "allstarfull"
     __table_args__ = {"schema": "public"}
     allStarFullID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     yearID = Column(VARCHAR(4))
     gameNum = Column(INTEGER)
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgID = Column(VARCHAR(3))
     GP = Column(INTEGER)
     startingPOS = Column(INTEGER)
@@ -161,7 +163,7 @@ class AwardsManagers(Base):
     __tablename__ = "awardsmanagers"
     __table_args__ = {"schema": "public"}
     awardsManagersID = Column(INTEGER, primary_key=True, autoincrement=True)
-    manager_ID = Column(INTEGER, ForeignKey(Managers.manager_ID))
+    manager_ID = Column(INTEGER)  # ForeignKey(Managers.manager_ID))
     playerID = Column(VARCHAR(10))
     awardID = Column(VARCHAR(30))
     yearID = Column(VARCHAR(4))
@@ -175,7 +177,7 @@ class AwardsPlayers(Base):
     __tablename__ = "awardsplayers"
     __table_args__ = {"schema": "public"}
     awardsPlayersID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     awardID = Column(VARCHAR(30))
     yearID = Column(VARCHAR(4))
     lgID = Column(VARCHAR(2))
@@ -188,7 +190,7 @@ class AwardsSharePlayers(Base):
     __tablename__ = "awardsshareplayers"
     __table_args__ = {"schema": "public"}
     awardsSharePlayersID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     awardID = Column(VARCHAR(20))
     yearID = Column(VARCHAR(4))
     lgID = Column(VARCHAR(2))
@@ -202,10 +204,10 @@ class Batting(Base):
     __tablename__ = "batting"
     __table_args__ = {"schema": "public"}
     battingID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     yearID = Column(VARCHAR(4))
     stint = Column(INTEGER)
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgID = Column(VARCHAR(3))
     G = Column(INTEGER)
     AB = Column(INTEGER)
@@ -232,8 +234,8 @@ class Salaries(Base):
     __table_args__ = {"schema": "public"}
     salariesID = Column(INTEGER, primary_key=True, autoincrement=True)
     yearID = Column(VARCHAR(4))
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
+    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgID = Column(VARCHAR(2))
     salary = Column(INTEGER)
     UniqueConstraint(yearID, playerID)
@@ -243,7 +245,7 @@ class FieldingOF(Base):
     __tablename__ = "fieldingOF"
     __table_args__ = {"schema": "public"}
     fieldingOFID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     yearID = Column(VARCHAR(4))
     stint = Column(INTEGER)
     glf = Column(INTEGER)
@@ -256,7 +258,7 @@ class HallofFame(Base):
     __tablename__ = "halloffame"
     __table_args__ = {"schema": "public"}
     hallofFameID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     yearID = Column(VARCHAR(4))
     votedBy = Column(VARCHAR(20))
     ballots = Column(INTEGER)
@@ -272,10 +274,10 @@ class ManagersHalf(Base):
     __tablename__ = "managers_half"
     __table_args__ = {"schema": "public"}
     managersHalfID = Column(INTEGER, primary_key=True, autoincrement=True)
-    managerID = Column(INTEGER, ForeignKey(Managers.manager_ID))
+    managerID = Column(INTEGER)  # ForeignKey(Managers.manager_ID))
     playerID = Column(VARCHAR(10))
     yearID = Column(VARCHAR(4))
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgID = Column(VARCHAR(2))
     inseason = Column(INTEGER)
     half = Column(INTEGER)
@@ -292,9 +294,9 @@ class SeriesPost(Base):
     seriesPostID = Column(INTEGER, primary_key=True, autoincrement=True)
     yearID = Column(VARCHAR(4))
     round = Column(VARCHAR(5))
-    teamIDWinner = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamIDWinner = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgIDWinner = Column(VARCHAR(2))
-    teamIDLoser = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamIDLoser = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgIDLoser = Column(VARCHAR(2))
     wins = Column(INTEGER)
     losses = Column(INTEGER)
@@ -306,10 +308,10 @@ class BattingPost(Base):
     __tablename__ = "batting_post"
     __table_args__ = {"schema": "public"}
     battingPostID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     yearID = Column(VARCHAR(4))
     stint = Column(INTEGER)
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgID = Column(VARCHAR(3))
     G = Column(INTEGER)
     AB = Column(INTEGER)
@@ -335,10 +337,10 @@ class Fielding(Base):
     __tablename__ = "fielding"
     __table_args__ = {"schema": "public"}
     fieldingID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     yearID = Column(VARCHAR(4))
     stint = Column(INTEGER)
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgID = Column(VARCHAR(3))
     POS = Column(VARCHAR(2))
     G = Column(INTEGER)
@@ -360,10 +362,10 @@ class Pitching(Base):
     __tablename__ = "pitching"
     __table_args__ = {"schema": "public"}
     pitchingID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     yearID = Column(VARCHAR(4))
     stint = Column(INTEGER)
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgID = Column(VARCHAR(2))
     W = Column(INTEGER)
     L = Column(INTEGER)
@@ -397,10 +399,10 @@ class PitchingPost(Base):
     __tablename__ = "pitching_post"
     __table_args__ = {"schema": "public"}
     pitchingPostID = Column(INTEGER, primary_key=True, autoincrement=True)
-    playerID = Column(VARCHAR(10), ForeignKey(Master.playerID))
+    playerID = Column(VARCHAR(10))  # ForeignKey(Master.playerID))
     yearID = Column(VARCHAR(4))
     round = Column(VARCHAR(3))
-    teamID = Column(VARCHAR(3), ForeignKey(Teams.teamID))
+    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgID = Column(VARCHAR(2))
     W = Column(INTEGER)
     L = Column(INTEGER)
