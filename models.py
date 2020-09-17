@@ -229,6 +229,14 @@ class Managers_Wh(Base):
     UniqueConstraint(playerID, yearID, inseason)
 
 
+class Managers_Wh_lu(Base):
+    __tablename__ = "managers_lu"
+    __table_args__ = {"schema": "wh"}
+    manager_ID = Column(INTEGER, primary_key=True, autoincrement=True)
+    playerID = Column(VARCHAR(10))
+    UniqueConstraint(playerID)
+
+
 class TeamsHalf(Base):
     __tablename__ = "teams_half"
     __table_args__ = {"schema": "public"}
@@ -281,7 +289,7 @@ class AwardsShareManagers_Wh(Base):
     __tablename__ = "awardssharemanagers"
     __table_args__ = {"schema": "wh"}
     awardssharemanagersID = Column(INTEGER, autoincrement=True, primary_key=True)
-    manager_ID = Column(INTEGER, ForeignKey(Managers_Wh.manager_ID))
+    manager_ID = Column(INTEGER, ForeignKey(Managers_Wh_lu.manager_ID))
     awardID = Column(VARCHAR(20))
     yearID = Column(VARCHAR(4))
     lgID = Column(VARCHAR(2))
@@ -335,6 +343,19 @@ class AwardsManagers(Base):
     # UniqueConstraint(playerID, awardID, yearID)
 
 
+class AwardsManagers_Wh(Base):
+    __tablename__ = "awardsmanagers"
+    __table_args__ = {"schema": "wh"}
+    awardsManagersID = Column(INTEGER, primary_key=True, autoincrement=True)
+    manager_ID = Column(INTEGER, ForeignKey(Managers_Wh_lu.manager_ID))
+    awardID = Column(VARCHAR(30))
+    yearID = Column(VARCHAR(4))
+    lgID = Column(VARCHAR(2))
+    tie = Column(VARCHAR(1))
+    notes = Column(VARCHAR(3))
+    UniqueConstraint(manager_ID, awardID, yearID)
+
+
 class AwardsPlayers(Base):
     __tablename__ = "awardsplayers"
     __table_args__ = {"schema": "public"}
@@ -346,6 +367,19 @@ class AwardsPlayers(Base):
     tie = Column(VARCHAR(1))
     notes = Column(VARCHAR(10))
     # UniqueConstraint(playerID, awardID, yearID, lgID)
+
+
+class AwardsPlayers_Wh(Base):
+    __tablename__ = "awardsplayers"
+    __table_args__ = {"schema": "wh"}
+    awardsPlayersID = Column(INTEGER, primary_key=True, autoincrement=True)
+    playerID_auto = Column(INTEGER, ForeignKey(Master_Wh.playerID_auto))
+    awardID = Column(VARCHAR(45))
+    yearID = Column(VARCHAR(4))
+    lgID = Column(VARCHAR(2))
+    tie = Column(VARCHAR(1))
+    notes = Column(VARCHAR(10))
+    UniqueConstraint(playerID_auto, awardID, yearID, lgID)
 
 
 class AwardsSharePlayers(Base):
