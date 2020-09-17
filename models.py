@@ -212,6 +212,23 @@ class Managers(Base):
     # UniqueConstraint(playerID, yearID, inseason)
 
 
+class Managers_Wh(Base):
+    __tablename__ = "managers"
+    __table_args__ = {"schema": "wh"}
+    manager_ID = Column(INTEGER, primary_key=True, autoincrement=True)
+    playerID = Column(VARCHAR(10))
+    yearID = Column(VARCHAR(4))
+    teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    lgID = Column(VARCHAR(2))
+    inseason = Column(INTEGER)
+    G = Column(INTEGER)
+    W = Column(INTEGER)
+    L = Column(INTEGER)
+    rank = Column(INTEGER)
+    plyMgr = Column(VARCHAR(1))
+    UniqueConstraint(playerID, yearID, inseason)
+
+
 class TeamsHalf(Base):
     __tablename__ = "teams_half"
     __table_args__ = {"schema": "public"}
@@ -228,6 +245,22 @@ class TeamsHalf(Base):
     L = Column(INTEGER)
     UniqueConstraint(teamID, yearID, half)
 
+
+class TeamsHalf_Wh(Base):
+    __tablename__ = "teams_half"
+    __table_args__ = {"schema": "wh"}
+    teamsHalfID = Column(INTEGER, primary_key=True, autoincrement=True)
+    yearID = Column(VARCHAR(4))
+    lgID = Column(VARCHAR(2))
+    teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    half = Column(INTEGER)
+    divID = Column(VARCHAR(2))
+    divWin = Column(VARCHAR(1))
+    Rank = Column(INTEGER)
+    G = Column(INTEGER)
+    W = Column(INTEGER)
+    L = Column(INTEGER)
+    UniqueConstraint(teamID_auto, yearID, half)
 
 class AwardsShareManagers(Base):
     __tablename__ = "awardssharemanagers"

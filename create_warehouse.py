@@ -15,7 +15,8 @@ def join_path(fn):
 def create_warehouse():
     # print("Creating schema")
     # db.execute_sql_no_return(join_path('create_schema.sql'))
-    files = ['master.sql', 'teamfranchises.sql', 'teams.sql']
+    files = ['master.sql', 'teamfranchises.sql', 'teams.sql', 'managers.sql',
+             'teamshalf.sql']
 
     for i in files:
         print("Creating {x} master and deleting stg {x}".format(x=i))
