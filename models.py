@@ -36,7 +36,7 @@ class Master_Wh(Base):
     __tablename__ = "master"
     __table_args__ = {"schema": "wh"}
     playerID_auto = Column(INTEGER, autoincrement=True, primary_key=True)
-    playerID = Column(VARCHAR(10), primary_key=True)
+    playerID = Column(VARCHAR(10))
     birthYear = Column(VARCHAR(4))
     birthMonth = Column(INTEGER)
     birthDay = Column(INTEGER)
@@ -262,6 +262,7 @@ class TeamsHalf_Wh(Base):
     L = Column(INTEGER)
     UniqueConstraint(teamID_auto, yearID, half)
 
+
 class AwardsShareManagers(Base):
     __tablename__ = "awardssharemanagers"
     __table_args__ = {"schema": "public"}
@@ -276,19 +277,48 @@ class AwardsShareManagers(Base):
     # UniqueConstraint(playerID, yearID, lgID)
 
 
+class AwardsShareManagers_Wh(Base):
+    __tablename__ = "awardssharemanagers"
+    __table_args__ = {"schema": "wh"}
+    awardssharemanagersID = Column(INTEGER, autoincrement=True, primary_key=True)
+    manager_ID = Column(INTEGER, ForeignKey(Managers_Wh.manager_ID))
+    awardID = Column(VARCHAR(20))
+    yearID = Column(VARCHAR(4))
+    lgID = Column(VARCHAR(2))
+    pointsWon = Column(INTEGER)
+    pointsMax = Column(INTEGER)
+    votesFirst = Column(INTEGER)
+    UniqueConstraint(manager_ID, yearID, lgID)
+
+
 class AllStarFull(Base):
     __tablename__ = "allstarfull"
     __table_args__ = {"schema": "public"}
     # allStarFullID = Column(INTEGER, primary_key=True, autoincrement=True)
     playerID = Column(VARCHAR(10), primary_key=True)  # ForeignKey(Master.playerID))
     yearID = Column(VARCHAR(4), primary_key=True)
-    gameNum = Column(INTEGER)
-    gameID = VARCHAR(12)
+    gameNum = Column(INTEGER, primary_key=True)
+    gameID = Column(VARCHAR(12))
     teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
     lgID = Column(VARCHAR(3))
     GP = Column(INTEGER)
     startingPOS = Column(INTEGER)
     # UniqueConstraint(playerID, yearID)
+
+
+class AllStarFull_Wh(Base):
+    __tablename__ = "allstarfull"
+    __table_args__ = {"schema": "wh"}
+    allStarFullID = Column(INTEGER, primary_key=True, autoincrement=True)
+    playerID_auto = Column(INTEGER, ForeignKey(Master_Wh.playerID_auto))
+    yearID = Column(VARCHAR(4))
+    gameNum = Column(INTEGER)
+    gameID = Column(VARCHAR(12))
+    teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    lgID = Column(VARCHAR(3))
+    GP = Column(INTEGER)
+    startingPOS = Column(INTEGER)
+    UniqueConstraint(playerID_auto, yearID, gameNum)
 
 
 class AwardsManagers(Base):

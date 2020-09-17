@@ -23,7 +23,7 @@ def insert_data():
                   'halloffame.csv': 'halloffame', 'managershalf.csv': 'managers_half',
                   'seriespost.csv': 'series_post', 'battingpost.csv': 'batting_post',
                   'fielding.csv': 'fielding', 'pitching.csv': 'pitching',
-                  'pitchingpost.csv': 'pitching_post'}
+                  'pitchingpost.csv': 'pitching_post', 'allstarfull.csv': 'allstarfull'}
     for i, k in csv_tables.items():
 
         path = join_path("{i}".format(i=i))
