@@ -16,9 +16,11 @@ def create_warehouse():
     # print("Creating schema")
     # db.execute_sql_no_return(join_path('create_schema.sql'))
     files = ['master.sql', 'teamfranchises.sql', 'teams.sql',
-              'managers.sql', 'teamshalf.sql', 'awardssharemanagers.sql',
+             'managers_lu.sql', 'managers.sql', 'awardssharemanagers.sql',
              'allstarfull.sql', 'awardsmanagers.sql', 'awardsplayers.sql',
-             'awardsshareplayers.sql', 'batting.sql']
+             'awardsshareplayers.sql', 'batting.sql', 'salaries.sql',
+             'fieldingof.sql', 'halloffame.sql', 'seriespost.sql',
+             'battingpost.sql', 'fielding.sql']
 
     for i in files:
         print("Creating {x} master and deleting stg {x}".format(x=i))

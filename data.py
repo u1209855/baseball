@@ -16,11 +16,11 @@ def insert_data():
     cur = conn.cursor()
     csv_tables = {'Master.csv': 'master', 'TeamsFranchises.csv': 'team_franchises',
                   'teams.csv': 'teams', 'managers.csv': 'managers',
-                  'teamshalf.csv': 'teams_half', 'awardssharemanagers.csv': 'awardssharemanagers',
+                  'awardssharemanagers.csv': 'awardssharemanagers',
                   'awardsmanagers.csv': 'awardsmanagers', 'awardsplayers.csv': 'awardsplayers',
                   'awardsshareplayers.csv': 'awardsshareplayers', 'batting.csv': 'batting',
                   'salaries.csv': 'salaries', 'fieldingOF.csv': "fieldingOF",
-                  'halloffame.csv': 'halloffame', 'managershalf.csv': 'managers_half',
+                  'halloffame.csv': 'halloffame',
                   'seriespost.csv': 'series_post', 'battingpost.csv': 'batting_post',
                   'fielding.csv': 'fielding', 'pitching.csv': 'pitching',
                   'pitchingpost.csv': 'pitching_post', 'allstarfull.csv': 'allstarfull'}

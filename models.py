@@ -212,11 +212,19 @@ class Managers(Base):
     # UniqueConstraint(playerID, yearID, inseason)
 
 
-class Managers_Wh(Base):
-    __tablename__ = "managers"
+class Managers_Wh_lu(Base):
+    __tablename__ = "managers_lu"
     __table_args__ = {"schema": "wh"}
     manager_ID = Column(INTEGER, primary_key=True, autoincrement=True)
     playerID = Column(VARCHAR(12))
+    UniqueConstraint(playerID)
+
+
+class Managers_Wh(Base):
+    __tablename__ = "managers"
+    __table_args__ = {"schema": "wh"}
+    manager_ID_auto = Column(INTEGER, primary_key=True, autoincrement=True)
+    manager_ID = Column(INTEGER, ForeignKey(Managers_Wh_lu.manager_ID))
     yearID = Column(VARCHAR(4))
     teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
     lgID = Column(VARCHAR(2))
@@ -226,41 +234,7 @@ class Managers_Wh(Base):
     L = Column(INTEGER)
     rank = Column(INTEGER)
     plyMgr = Column(VARCHAR(1))
-    UniqueConstraint(playerID, yearID, inseason)
-
-
-class TeamsHalf(Base):
-    __tablename__ = "teams_half"
-    __table_args__ = {"schema": "public"}
-    # teamsHalfID = Column(INTEGER, primary_key=True, autoincrement=True)
-    yearID = Column(VARCHAR(4), primary_key=True)
-    lgID = Column(VARCHAR(2))
-    teamID = Column(VARCHAR(3), primary_key=True)  # ForeignKey(Teams.teamID))
-    half = Column(INTEGER, primary_key=True)
-    divID = Column(VARCHAR(2))
-    divWin = Column(VARCHAR(1))
-    Rank = Column(INTEGER)
-    G = Column(INTEGER)
-    W = Column(INTEGER)
-    L = Column(INTEGER)
-    UniqueConstraint(teamID, yearID, half)
-
-
-class TeamsHalf_Wh(Base):
-    __tablename__ = "teams_half"
-    __table_args__ = {"schema": "wh"}
-    teamsHalfID = Column(INTEGER, primary_key=True, autoincrement=True)
-    yearID = Column(VARCHAR(4))
-    lgID = Column(VARCHAR(2))
-    teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
-    half = Column(INTEGER)
-    divID = Column(VARCHAR(2))
-    divWin = Column(VARCHAR(1))
-    Rank = Column(INTEGER)
-    G = Column(INTEGER)
-    W = Column(INTEGER)
-    L = Column(INTEGER)
-    UniqueConstraint(teamID_auto, yearID, half)
+    UniqueConstraint(manager_ID, yearID, inseason)
 
 
 class AwardsShareManagers(Base):
@@ -281,7 +255,7 @@ class AwardsShareManagers_Wh(Base):
     __tablename__ = "awardssharemanagers"
     __table_args__ = {"schema": "wh"}
     awardssharemanagersID = Column(INTEGER, autoincrement=True, primary_key=True)
-    manager_ID = Column(INTEGER, ForeignKey(Managers_Wh.manager_ID))
+    manager_ID = Column(INTEGER, ForeignKey(Managers_Wh_lu.manager_ID))
     awardID = Column(VARCHAR(20))
     yearID = Column(VARCHAR(4))
     lgID = Column(VARCHAR(2))
@@ -339,7 +313,7 @@ class AwardsManagers_Wh(Base):
     __tablename__ = "awardsmanagers"
     __table_args__ = {"schema": "wh"}
     awardsManagersID = Column(INTEGER, primary_key=True, autoincrement=True)
-    manager_ID = Column(INTEGER, ForeignKey(Managers_Wh.manager_ID))
+    manager_ID = Column(INTEGER, ForeignKey(Managers_Wh_lu.manager_ID))
     awardID = Column(VARCHAR(30))
     yearID = Column(VARCHAR(4))
     lgID = Column(VARCHAR(2))
@@ -472,6 +446,18 @@ class Salaries(Base):
     # UniqueConstraint(yearID, teamID, playerID)
 
 
+class Salaries_Wh(Base):
+    __tablename__ = "salaries"
+    __table_args__ = {"schema": "wh"}
+    salariesID = Column(INTEGER, primary_key=True, autoincrement=True)
+    yearID = Column(VARCHAR(4))
+    teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    lgID = Column(VARCHAR(2))
+    playerID_auto = Column(INTEGER, ForeignKey(Master_Wh.playerID_auto))
+    salary = Column(INTEGER)
+    UniqueConstraint(yearID, teamID_auto, playerID_auto)
+
+
 class FieldingOF(Base):
     __tablename__ = "fieldingof"
     __table_args__ = {"schema": "public"}
@@ -483,6 +469,19 @@ class FieldingOF(Base):
     gcf = Column(INTEGER)
     grf = Column(INTEGER)
     # UniqueConstraint(playerID, yearID, stint)
+
+
+class FieldingOF_Wh(Base):
+    __tablename__ = "fieldingof"
+    __table_args__ = {"schema": "wh"}
+    fieldingOFID = Column(INTEGER, primary_key=True, autoincrement=True)
+    playerID_auto = Column(INTEGER, ForeignKey(Master_Wh.playerID_auto))
+    yearID = Column(VARCHAR(4))
+    stint = Column(INTEGER)
+    glf = Column(INTEGER)
+    gcf = Column(INTEGER)
+    grf = Column(INTEGER)
+    UniqueConstraint(playerID_auto, yearID, stint)
 
 
 class HallofFame(Base):
@@ -501,22 +500,20 @@ class HallofFame(Base):
     # UniqueConstraint(playerID, yearID, votedBy)
 
 
-class ManagersHalf(Base):
-    __tablename__ = "managers_half"
-    __table_args__ = {"schema": "public"}
-    # managersHalfID = Column(INTEGER, primary_key=True, autoincrement=True)
-    # managerID = Column(INTEGER)  # ForeignKey(Managers.manager_ID))
-    playerID = Column(VARCHAR(10), primary_key=True)
-    yearID = Column(VARCHAR(4), primary_key=True)
-    teamID = Column(VARCHAR(3))  # ForeignKey(Teams.teamID))
-    lgID = Column(VARCHAR(2))
-    inseason = Column(INTEGER)
-    half = Column(INTEGER, primary_key=True)
-    G = Column(INTEGER)
-    W = Column(INTEGER)
-    L = Column(INTEGER)
-    rank = Column(INTEGER)
-    # UniqueConstraint(playerID, yearID, half)
+class HallofFame_Wh(Base):
+    __tablename__ = "halloffame"
+    __table_args__ = {"schema": "wh"}
+    hallofFameID = Column(INTEGER, primary_key=True, autoincrement=True)
+    playerID_auto = Column(INTEGER, ForeignKey(Master_Wh.playerID_auto))
+    yearID = Column(VARCHAR(4))
+    votedBy = Column(VARCHAR(20))
+    ballots = Column(INTEGER)
+    needed = Column(INTEGER)
+    votes = Column(INTEGER)
+    inducted = Column(VARCHAR(1))
+    category = Column(VARCHAR(30))
+    needed_note = Column(VARCHAR(10))
+    UniqueConstraint(playerID_auto, yearID, votedBy)
 
 
 class SeriesPost(Base):
@@ -533,6 +530,22 @@ class SeriesPost(Base):
     losses = Column(INTEGER)
     ties = Column(INTEGER)
     # UniqueConstraint(yearID, round)
+
+
+class SeriesPost_Wh(Base):
+    __tablename__ = "series_post"
+    __table_args__ = {"schema": "wh"}
+    seriesPostID = Column(INTEGER, primary_key=True, autoincrement=True)
+    yearID = Column(VARCHAR(4))
+    round = Column(VARCHAR(5))
+    teamID_auto_Winner = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    lgIDWinner = Column(VARCHAR(2))
+    teamID_auto_Loser = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    lgIDLoser = Column(VARCHAR(2))
+    wins = Column(INTEGER)
+    losses = Column(INTEGER)
+    ties = Column(INTEGER)
+    UniqueConstraint(yearID, round)
 
 
 class BattingPost(Base):
@@ -564,6 +577,35 @@ class BattingPost(Base):
     # UniqueConstraint(playerID, yearID, round)
 
 
+class BattingPost_Wh(Base):
+    __tablename__ = "batting_post"
+    __table_args__ = {"schema": "wh"}
+    battingPostID = Column(INTEGER, primary_key=True, autoincrement=True)
+    yearID = Column(VARCHAR(4))
+    round = Column(VARCHAR(5))
+    playerID_auto = Column(INTEGER, ForeignKey(Master_Wh.playerID_auto))
+    teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    lgID = Column(VARCHAR(3))
+    G = Column(INTEGER)
+    AB = Column(INTEGER)
+    R = Column(INTEGER)
+    H = Column(INTEGER)
+    B2 = Column(INTEGER)
+    B3 = Column(INTEGER)
+    HR = Column(INTEGER)
+    RB = Column(INTEGER)
+    SB = Column(INTEGER)
+    CS = Column(INTEGER)
+    BB = Column(INTEGER)
+    SO = Column(INTEGER)
+    IBB = Column(INTEGER)
+    HBP = Column(INTEGER)
+    SH = Column(INTEGER)
+    SF = Column(INTEGER)
+    GIDP = Column(INTEGER)
+    UniqueConstraint(playerID_auto, yearID, round)
+
+
 class Fielding(Base):
     __tablename__ = "fielding"
     __table_args__ = {"schema": "public"}
@@ -587,6 +629,31 @@ class Fielding(Base):
     CS = Column(INTEGER)
     ZR = Column(INTEGER)
     # UniqueConstraint(playerID, yearID, stint, POS)
+
+
+class Fielding_Wh(Base):
+    __tablename__ = "fielding"
+    __table_args__ = {"schema": "wh"}
+    fieldingID = Column(INTEGER, primary_key=True, autoincrement=True)
+    playerID_auto = Column(INTEGER, ForeignKey(Master_Wh.playerID_auto))
+    yearID = Column(VARCHAR(4))
+    stint = Column(INTEGER)
+    teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    lgID = Column(VARCHAR(3))
+    POS = Column(VARCHAR(2))
+    G = Column(INTEGER)
+    GS = Column(INTEGER)
+    InnOuts = Column(INTEGER)
+    PO = Column(INTEGER)
+    A = Column(INTEGER)
+    E = Column(INTEGER)
+    DP = Column(INTEGER)
+    PB = Column(INTEGER)
+    WP = Column(INTEGER)
+    SB = Column(INTEGER)
+    CS = Column(INTEGER)
+    ZR = Column(INTEGER)
+    UniqueConstraint(playerID_auto, yearID, stint, POS)
 
 
 class Pitching(Base):
