@@ -693,6 +693,43 @@ class Pitching(Base):
     # UniqueConstraint(playerID, stint, yearID)
 
 
+class Pitching_Wh(Base):
+    __tablename__ = "pitching"
+    __table_args__ = {"schema": "wh"}
+    pitchingID = Column(INTEGER, primary_key=True, autoincrement=True)
+    playerID_auto = Column(INTEGER, ForeignKey(Master_Wh.playerID_auto))
+    yearID = Column(VARCHAR(4))
+    stint = Column(INTEGER)
+    teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    lgID = Column(VARCHAR(2))
+    W = Column(INTEGER)
+    L = Column(INTEGER)
+    G = Column(INTEGER)
+    GS = Column(INTEGER)
+    CG = Column(INTEGER)
+    SHO = Column(INTEGER)
+    SV = Column(INTEGER)
+    IPouts = Column(INTEGER)
+    H = Column(INTEGER)
+    ER = Column(INTEGER)
+    HR = Column(INTEGER)
+    BB = Column(INTEGER)
+    SO = Column(INTEGER)
+    BAopp = Column(FLOAT)
+    ERA = Column(FLOAT)
+    IBB = Column(INTEGER)
+    WP = Column(INTEGER)
+    HBP = Column(INTEGER)
+    BK = Column(INTEGER)
+    BFP = Column(INTEGER)
+    GF = Column(INTEGER)
+    R = Column(INTEGER)
+    SH = Column(INTEGER)
+    SF = Column(INTEGER)
+    GIDP = Column(INTEGER)
+    UniqueConstraint(playerID_auto, stint, yearID)
+
+
 class PitchingPost(Base):
     __tablename__ = "pitching_post"
     __table_args__ = {"schema": "public"}
@@ -728,6 +765,43 @@ class PitchingPost(Base):
     SF = Column(INTEGER)
     GIDP = Column(INTEGER)
     # UniqueConstraint(round, playerID, yearID)
+
+
+class PitchingPost_Wh(Base):
+    __tablename__ = "pitching_post"
+    __table_args__ = {"schema": "wh"}
+    pitchingPostID = Column(INTEGER, primary_key=True, autoincrement=True)
+    playerID_auto = Column(INTEGER, ForeignKey(Master_Wh.playerID_auto))
+    yearID = Column(VARCHAR(4))
+    round = Column(VARCHAR(5))
+    teamID_auto = Column(INTEGER, ForeignKey(Teams_Wh.teamID_auto))
+    lgID = Column(VARCHAR(2))
+    W = Column(INTEGER)
+    L = Column(INTEGER)
+    G = Column(INTEGER)
+    GS = Column(INTEGER)
+    CG = Column(INTEGER)
+    SHO = Column(INTEGER)
+    SV = Column(INTEGER)
+    IPouts = Column(INTEGER)
+    H = Column(INTEGER)
+    ER = Column(INTEGER)
+    HR = Column(INTEGER)
+    BB = Column(INTEGER)
+    SO = Column(INTEGER)
+    BAopp = Column(FLOAT)
+    ERA = Column(FLOAT)
+    IBB = Column(INTEGER)
+    WP = Column(INTEGER)
+    HBP = Column(INTEGER)
+    BK = Column(INTEGER)
+    BFP = Column(INTEGER)
+    GF = Column(INTEGER)
+    R = Column(INTEGER)
+    SH = Column(INTEGER)
+    SF = Column(INTEGER)
+    GIDP = Column(INTEGER)
+    UniqueConstraint(round, playerID_auto, yearID)
 
 
 def create_models(engine):

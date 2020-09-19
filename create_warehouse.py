@@ -20,7 +20,8 @@ def create_warehouse():
              'allstarfull.sql', 'awardsmanagers.sql', 'awardsplayers.sql',
              'awardsshareplayers.sql', 'batting.sql', 'salaries.sql',
              'fieldingof.sql', 'halloffame.sql', 'seriespost.sql',
-             'battingpost.sql', 'fielding.sql']
+             'battingpost.sql', 'fielding.sql', 'pitching.sql',
+             'pitchingpost.sql']
 
     for i in files:
         print("Creating {x} master and deleting stg {x}".format(x=i))
